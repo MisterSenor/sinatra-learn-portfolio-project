@@ -1,0 +1,9 @@
+
+<%@artists.each do |artist|%>
+<b>Artist #:</b> <%=artist.id%><br></br>
+<b>Name:</b> <%=artist.name%><br></br>
+<b>Works:</b> <%artist.works.each do |work|%>
+  <%=work.name%>
+  <%end%><br></br>
+<b>Style:</b> <%=artist.style%><br></br><br></br>
+<%end%>

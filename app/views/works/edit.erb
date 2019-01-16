@@ -1,0 +1,13 @@
+<form action="/works/<%=@work.id%>" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <h1>Edit work form</h1>
+  <b>Name of work: </b><input type="text" name="work[name]" id="work_name" value="<%=@work.name%>">
+  <br></br>
+  <b>Year completed: </b><input type="integer" name="work[year_completed]" id="work_year_completed" value="<%=@work.year_completed%>">
+  <br></br>
+  <b>Artist of work: </b><input type="text" name="work[artist]" id="work_artist" value="<%=@work.artist.name%>">
+  <br></br>
+  <b>Patron of work: </b><input type="text" name="work[patron]" id="work_patron" value="<%=@work.patron.name%>">
+  <br></br>
+  <input type="submit" value="Update work">
+</form>

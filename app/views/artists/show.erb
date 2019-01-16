@@ -1,0 +1,16 @@
+<b>Artist name: </b><%=@artist.name%>
+<br></br>
+<b>Artist period: </b><%=@artist.period%>
+<br></br>
+<b>Artist style: </b><%=@artist.style%>
+<br></br>
+<b>Artist works: </b><%@artist.works.each do |work|%>
+<%=work.name%>,
+<%=work.year_completed%>
+<br></br>
+<%end%>
+<br></br>
+<form action="/artists/<%=@artist.id%>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Artist">
+</form>

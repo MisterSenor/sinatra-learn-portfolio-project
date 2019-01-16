@@ -1,0 +1,13 @@
+
+<b>Work name: </b><%=@work.name%>
+<br></br>
+<b>Work artist: </b><%=@work.artist.name%>
+<br></br>
+<b>Year completed: </b><%=@work.year_completed%>
+<br></br>
+<b>Work patron: </b><%=@work.patron.name%>
+<br></br>
+<form action="/works/<%=@work.id%>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Work">
+</form>

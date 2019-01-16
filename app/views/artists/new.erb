@@ -1,0 +1,22 @@
+<h1>New artist form</h1>
+<form action="/artists/new" method="post">
+
+
+Artist name: <input type="text" name="artist[name]">
+<br></br>
+Artist period: <input type="text" name="artist[period]">
+<br></br>
+Artist style: <input type="text" name="artist[style]">
+<br></br>
+<b>Do any of the following works belong to this artist?</b>
+<%Work.all.each do |work|%>
+<br></br>
+  <input type="checkbox" name="artist[work_ids][]" id="<%=work.id%>" value="<%=work.id%>">
+  <%=work.name%>
+</input>
+<%end%>
+<br></br>
+<b>If not, what is the name of one of this artist's works? (Create a new work in the database.)</b> <input type="text" name="artist[work]" id="artist_work">
+<br></br>
+<input type="submit" value="submit">
+</form>

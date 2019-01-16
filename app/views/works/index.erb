@@ -1,0 +1,10 @@
+
+<%@works.each do |work|%>
+<b>Work #:</b> <%=work.id%><br></br>
+<b>Name:</b> <%=work.name%><br></br>
+<b>Artist:</b> <%=work.artist.name%><br></br>
+<b>Year completed:</b> <%=work.year_completed%><br></br>
+<b>Patron:</b> <%=work.patron.name%>
+<br></br>
+<br></br>
+<%end%>
