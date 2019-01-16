@@ -16,7 +16,12 @@ Artist style: <input type="text" name="artist[style]">
 </input>
 <%end%>
 <br></br>
-<b>If not, what is the name of one of this artist's works? (Create a new work in the database.)</b> <input type="text" name="artist[work]" id="artist_work">
+<b>Create a new work in the database:</b>
+<BLOCKQUOTE>Name of work: <input type="text" name="work[name]" id="title_of_work">
 <br></br>
+Patron of work: <input type="text" name="work[patron]" id="patron">
+<br></br>
+Year completed: <input type="integer" name="work[year_completed]" id="work_year_completed">
+<br></br></BLOCKQUOTE>
 <input type="submit" value="submit">
 </form>

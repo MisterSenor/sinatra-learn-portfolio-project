@@ -28,8 +28,10 @@ class ArtistController < ApplicationController
       redirect to '/artists/error'
     else
       @artist = Artist.create(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
-      if !params["artist"]["work"].empty?
-        @work = Work.create(name: params["artist"]["work"])
+      if !params["work"].empty?
+        @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
+        @patron = Patron.find_or_create_by(name: params["work"]["patron"])
+        @patron.works << @work
         @artist.works << @work
       end
     end
