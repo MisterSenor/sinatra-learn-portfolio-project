@@ -1,11 +1,17 @@
 
 <%@artists.each do |artist|%>
-<b>Artist #:</b> <%=artist.id%><br></br>
-<b>Name:</b> <%=artist.name%><br></br>
+<b>Artist #:</b> <%=artist.id%>
+<br></br>
+<b>Name:</b> <%=artist.name%>
+<br></br>
 <b>Works:</b> <%artist.works.each do |work|%>
   <i><%=work.name%></i>,
   <%=work.year_completed%>
   <br></br>
   <%end%>
-<b>Style:</b> <%=artist.style%><br></br><br></br>
+<b>Style:</b> <%=artist.style%>
+</br></br>
+<a href="/artists/<%=artist.id%>/edit">Edit this artist's information</a>
+<br></br>
+<br></br>
 <%end%>

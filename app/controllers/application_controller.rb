@@ -10,7 +10,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    "Welcome to the artist, works, and patrons database!"
+    erb :index
   end
 
 end

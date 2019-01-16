@@ -60,7 +60,14 @@ class ArtistController < ApplicationController
   patch '/artists/:id' do
     @artist = Artist.find_by_id(params["id"])
     @artist.update(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
-    if params["work"]["name"] != nil && params["work"]["name"] != "" && params["work"]["name"] != /\s*/ 
+    if !params["artist"]["work_ids"].empty?
+      @artist.works.clear
+      params["artist"]["work_ids"].each do |work_id|
+        @work = Work.find_by_id(work_id)
+        @artist.works << @work
+      end
+    end
+    if params["work"]["name"] != nil && params["work"]["name"] != "" && params["work"]["name"] != /\s*/
       @work = Work.create(name: params["work"]["name"] , year_completed: params["work"]["year_completed"])
       @patron = Patron.find_or_create_by(name: params["work"]["patron"])
       @patron.works << @work
