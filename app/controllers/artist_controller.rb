@@ -26,6 +26,9 @@ class ArtistController < ApplicationController
       redirect to '/artists/error'
     elsif params["artist"]["style"] == nil || params["artist"]["style"] == "" || params["artist"]["style"] == /\s*/
       redirect to '/artists/error'
+    elsif Artist.find_by_name(params["artist"]["name"])
+      @artist = Artist.find_by_name(params["artist"]["name"])
+      redirect to "/artists/#{@artist.id}/edit"
     else
       @artist = Artist.create(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
       if !params["work"].empty?
