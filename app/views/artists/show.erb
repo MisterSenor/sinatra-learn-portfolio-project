@@ -5,10 +5,11 @@
 <b>Artist style: </b><%=@artist.style%>
 <br></br>
 <b>Artist works: </b><%@artist.works.each do |work|%>
-<%=work.name%>,
+<i><%=work.name%></i>,
 <%=work.year_completed%>
 <br></br>
 <%end%>
+<a href="/artists/<%=@artist.id%>/edit">Edit artist details</a>
 <br></br>
 <form action="/artists/<%=@artist.id%>/delete" method="post">
   <input id="hidden" type="hidden" name="_method" value="delete">

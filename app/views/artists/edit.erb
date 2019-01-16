@@ -8,6 +8,20 @@ Artist period: <input type="text" name="artist[period]" value="<%=@artist.period
 <br></br>
 Artist style: <input type="text" name="artist[style]" value="<%=@artist.style%>">
 <br></br>
-
+Artist works:
+<%Work.all.each do |work|%>
+<br></br>
+  <input type="checkbox" name="artist[work_ids][]" id="<%=work.id%>" value="<%=work.id%>"<%='checked' if @artist.works.include?(work)%>>
+  <%=work.name%>
+</input>
+<%end%>
+<br></br>
+Add a work to this artist.
+<BLOCKQUOTE>Name of work: <input type="text" name="work[name]" id="title_of_work">
+<br></br>
+Patron of work: <input type="text" name="work[patron]" id="patron">
+<br></br>
+Year completed: <input type="integer" name="work[year_completed]" id="work_year_completed">
+<br></br></BLOCKQUOTE>
 <input type="submit" value="Update artist">
 </form>
