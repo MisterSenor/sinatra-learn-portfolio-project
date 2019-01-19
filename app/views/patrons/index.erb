@@ -1,0 +1,17 @@
+<%@patrons.each do |patron|%>
+<b>Patron #:</b> <%=patron.id%>
+<br></br>
+<b>Patron name:</b> <%=patron.name%>
+<br></br>
+<b>Works: </b> <%patron.works.each_with_index do |work, index|%>
+<BLOCKQUOTE>Work #: <%=index + 1%>, <i><%=work.name%></i>
+<br></br>
+Artist: <%=work.artist.name%>
+<br></br>
+Year completed: <%=work.year_completed%>
+</BLOCKQUOTE>
+<br></br>
+<%end%>
+<br></br>
+<br></br>
+<%end%>

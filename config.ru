@@ -9,3 +9,4 @@ use Rack::MethodOverride
 run ApplicationController
 use ArtistController
 use WorksController
+use PatronsController
