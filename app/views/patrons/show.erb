@@ -1,0 +1,13 @@
+
+<b>Patron #:</b> <%=@patron.id%>
+<br></br>
+<b>Patron name:</b> <%=@patron.name%>
+<br></br>
+<b>Patron's works:</b> <%@patron.works.each_with_index do |work, index|%>
+<BLOCKQUOTE>work #:<%=index + 1%>
+  <ul><i><%=work.name%></i>, by <%=work.artist.name%>, finished in <%=work.year_completed%></ul>
+    </BLOCKQUOTE>
+  <%end%>
+  <br></br>
+
+<a href="/patrons/<%=@patron.id%>/edit">Edit this patron's information</a>
