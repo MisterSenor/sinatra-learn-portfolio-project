@@ -3,20 +3,21 @@
 <form action="/patrons/<%=@patron.id%>" method="post">
 <input id="hidden" type="hidden" name="_method" value="patch">
 
-Name: <input type="text" name="patron" value="<%=@patron.name%>">
+Name: <input type="text" name="patron_name" value="<%=@patron.name%>">
 <br></br>
 Patron's works:
 <%@patron.works.each do |work|%>
-<input type="checkbox" name="patron[work_ids][]" id="<%work.id%>" value="<%=work.id%>" <%'checked' if @patron.works.include?(work)%>>
+<input type="checkbox" name="patron_works[work_ids][]" id="<%work.id%>" value="<%=work.id%>" <%='checked' if @patron.works.include?(work)%>>
+<%=work.name%>
 <%end%>
 <br></br>
-New work of Patron: <input type="text" name="patron[new_work]">
-Year completed: <input type="text" name="patron[new_work][year_completed]">
+New work of Patron: <input type="text" name="work[name]">
+Year completed: <input type="text" name="work[year_completed]">
 <br></br>
 <b>Are any of the following artist's the creator of this new work? </b>
 <%Artist.all.each do |artist|%>
 <br></br>
-  <input type="checkbox" name="work[artist_id][]" id="<%=artist.id%>" value="<%=artist.id%>">
+  <input type="checkbox" name="patron_works[artist_id]" id="<%=artist.id%>" value="<%=artist.id%>">
   <%=artist.name%>
 </input>
 <%end%>
@@ -24,5 +25,5 @@ Year completed: <input type="text" name="patron[new_work][year_completed]">
 <b>Create a new artist in the database for this work:</b>
 <BLOCKQUOTE>Name of artist: <input type="text" name="artist">
 </BLOCKQUOTE>
-<input type="submit" value="submit">
+<input type="submit" value="Update patron">
 </form>

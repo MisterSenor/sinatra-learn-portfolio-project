@@ -1,6 +1,6 @@
 <h1>New patron form</h1>
-<form action="/patrons" method="post">
-Name: <input type="text" name="patron">
+<form action="/patrons/new" method="post">
+Name: <input type="text" name="patron_name">
 <br></br>
 Name of Work: <input type="text" name="work[name]" id="work_name">
 <br></br>
@@ -9,7 +9,7 @@ Year completed: <input type="text" name="work[year_completed]">
 <b>Are any of the following artist's the creator of this work? </b>
 <%Artist.all.each do |artist|%>
 <br></br>
-  <input type="checkbox" name="work[artist_id][]" id="<%=artist.id%>" value="<%=artist.id%>">
+  <input type="checkbox" name="work[artist_id]" id="<%=artist.id%>" value="<%=artist.id%>">
   <%=artist.name%>
 </input>
 <%end%>
