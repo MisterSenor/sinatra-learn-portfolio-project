@@ -51,15 +51,10 @@ class PatronsController < ApplicationController
     if params["artist"].empty? && params["patron_works"]["artist_id"] == nil
       new_work_array = []
       params["patron_works"]["work_ids"].each do |work|
-        new_work_array << work.to_i
+        @work = Work.find_by_id(work)
+        new_work_array << @work
       end
-      old_work_array = []
-      @patron.works.each do |work|
-        old_work_array << work
-      end
-      deleted_work = old_work_array - new_work_array
-      @work = Work.find_by_id(deleted_work)
-      @patron.works - @work
+      @patron.works = @patron.works.reject{|x| !new_work_array.include?(x)}
     end
     if !params["work"]["name"].empty?#the params form with a new work name isn't empty
       @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
