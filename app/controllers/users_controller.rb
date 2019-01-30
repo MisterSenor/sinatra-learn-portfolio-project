@@ -16,13 +16,18 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
-    user = User.find_by_username(username: params["username"])
-    if user && user.authenticate(params["password"])
-      session[:user_id] = user.id
+    @user = User.find_by(username: params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
       redirect to '/index'
     else
       redirect to '/signup'
     end
+  end
+
+  post '/logout' do
+    session.clear
+    redirect to '/'
   end
 
 end

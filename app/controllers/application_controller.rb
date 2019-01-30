@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/index' do
-    @user = User.find_by_id(session["id"])
+    @user = User.find_by_id(session["user_id"])
     erb :index
   end
 
