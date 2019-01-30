@@ -10,3 +10,4 @@ run ApplicationController
 use ArtistController
 use WorksController
 use PatronsController
+use UsersController
