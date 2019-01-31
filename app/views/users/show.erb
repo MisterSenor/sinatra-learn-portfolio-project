@@ -1,0 +1,8 @@
+
+<p>Here are your Artists, <%= @user.username %>:
+<% @user.artists.each do |artist| %>
+  <ul>
+    <li><a href="/artists/<%=artist.id%>"><%= artist.name %></a></li>
+  </ul>
+  </p>
+<% end %>

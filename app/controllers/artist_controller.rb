@@ -2,7 +2,7 @@
 class ArtistController < ApplicationController
 
   get '/artists' do
-    #index action
+    redirect_if_not_logged_in
     @artists = Artist.all
       if @artists.empty?
         erb :'/artists/none'
@@ -12,14 +12,17 @@ class ArtistController < ApplicationController
   end
 
   get '/artists/new' do
+    redirect_if_not_logged_in
     erb :'/artists/new'
   end
 
   get '/artists/error' do
+    redirect_if_not_logged_in
     erb :'/artists/error/error'
   end
 
   post '/artists/new' do
+    redirect_if_not_logged_in
     if params["artist"]["name"] == nil || params["artist"]["name"] == "" || params["artist"]["name"] == /\s*/
       redirect to '/artists/error'
     elsif params["artist"]["period"] == nil || params["artist"]["period"] == "" || params["artist"]["period"] == /\s*/
@@ -48,16 +51,19 @@ class ArtistController < ApplicationController
   end
 
   get '/artists/:id' do
+    redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
       erb :'/artists/show'
   end
 
   get '/artists/:id/edit' do
+    redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
     erb :'/artists/edit'
   end
 
   patch '/artists/:id' do
+    redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
     @artist.update(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
     if !params["artist"]["work_ids"].empty?
@@ -77,6 +83,7 @@ class ArtistController < ApplicationController
   end
 
   delete '/artists/:id/delete' do
+    redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
     @artist.delete
     redirect to '/artists'

@@ -1,23 +1,28 @@
 class PatronsController < ApplicationController
 
   get '/patrons' do
+    redirect_if_not_logged_in
     @patrons = Patron.all
     erb :'/patrons/index'
   end
 
   get '/patrons/new' do
+    redirect_if_not_logged_in
     erb :'/patrons/new'
   end
 
   get '/patrons/errors/error' do
+    redirect_if_not_logged_in
     erb :'/patrons/errors/error'
   end
 
   get '/patrons/errors/too_much_artist_input' do
+    redirect_if_not_logged_in
     erb :'/patrons/errors/too_much_artist_input'
   end
 
   post '/patrons/new' do
+    redirect_if_not_logged_in
     @patron = Patron.create(name: params["patron_name"])
     @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
     if params["work"]["artist_id"] != nil
@@ -35,19 +40,22 @@ class PatronsController < ApplicationController
   end
 
   get '/patrons/:id' do
+    redirect_if_not_logged_in
     @patron = Patron.find_by_id(params["id"])
     erb :'/patrons/show'
   end
 
   get '/patrons/:id/edit' do
+    redirect_if_not_logged_in
     @patron = Patron.find_by_id(params["id"])
     erb :'/patrons/edit'
   end
 
   patch '/patrons/:id' do
+    redirect_if_not_logged_in
     @patron = Patron.find_by_id(params["id"])
     @patron.update(name: params["patron_name"])
-  #on line 52, "if there's no new artist name and there are no checkboxes for artists checked"
+  #below this line should read: "if there's no new artist name and there are no checkboxes for artists checked"
     if params["artist"].empty? && params["patron_works"]["artist_id"] == nil
       new_work_array = []
       params["patron_works"]["work_ids"].each do |work|
@@ -70,6 +78,13 @@ class PatronsController < ApplicationController
       @patron.works << @work
     end
     redirect to "/patrons"
+  end
+
+  delete '/patrons/:id/delete' do
+    redirect_if_not_logged_in
+    @patron = Patron.find_by_id(params["id"])
+    @patron.delete
+    redirect to '/patrons'
   end
 
 
