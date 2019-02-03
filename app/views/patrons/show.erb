@@ -9,5 +9,7 @@
     </BLOCKQUOTE>
   <%end%>
   <br></br>
-
 <a href="/patrons/<%=@patron.id%>/edit">Edit this patron's information</a>
+<p><form action="/patrons/<%=@patron.id%>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Patron"></p>
