@@ -34,7 +34,7 @@ class ArtistController < ApplicationController
       redirect to "/artists/#{@artist.id}/edit"
     else
       @artist = Artist.create(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
-      if !params["work"].empty?
+      if !params["work"]["name"].empty?
         @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
         @patron = Patron.find_or_create_by(name: params["work"]["patron"])
         @patron.works << @work
@@ -66,7 +66,7 @@ class ArtistController < ApplicationController
     redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
     @artist.update(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
-    if !params["artist"]["work_ids"].empty?
+    if params["artist"]["work_ids"]
       @artist.works.clear
       params["artist"]["work_ids"].each do |work_id|
         @work = Work.find_by_id(work_id)
