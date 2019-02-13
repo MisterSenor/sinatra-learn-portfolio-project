@@ -4,11 +4,7 @@
 <b>Name:</b> <i><%=work.name%></i><br></br>
 <b>Artist:</b> <%=work.artist.name%><br></br>
 <b>Year completed:</b> <%=work.year_completed%><br></br>
-<b>Patron:</b> <%if work.patron%>
-<%=work.patron.name%>
-<%else%>
-<%="none"%>
-<%end%>
+<b>Patron:</b> <%=work.patron.name%>
 <br></br>
 <a href="/works/<%=work.id%>/edit">Edit this work's information</a>
 <br></br>
