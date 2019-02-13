@@ -17,10 +17,10 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    if params["username"] == "" || params["username"] == nil || params["username"] == /\s*/
+    if params["username"] == "" || params["username"] == nil
       redirect to '/signup'
     end
-    if params["password"] == "" || params["password"] == nil || params["password"] == /\s*/
+    if params["password"] == "" || params["password"] == nil
       redirect to '/signup'
     end
     if @user = User.find_by_username(params["username"])

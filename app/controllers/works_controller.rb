@@ -18,13 +18,13 @@ class WorksController < ApplicationController
 
   post '/works' do
     redirect_if_not_logged_in
-    if params["work"]["name"] == nil || params["work"]["name"] == "" || params["work"]["name"] == /\s*/
+    if params["work"]["name"] == nil || params["work"]["name"] == ""
       redirect to '/works/error'
-    elsif params["work"]["year_completed"] == nil || params["work"]["year_completed"] == "" || params["work"]["year_completed"] == /\s*/
+    elsif params["work"]["year_completed"] == nil || params["work"]["year_completed"] == ""
       redirect to '/works/error'
-    elsif params["work"]["artist"] == nil || params["work"]["artist"] == "" || params["work"]["artist"] == /\s*/
+    elsif params["work"]["artist"] == nil || params["work"]["artist"] == ""
       redirect to '/works/error'
-    elsif params["work"]["patron"] == nil || params["work"]["patron"] == "" || params["work"]["patron"] == /\s*/
+    elsif params["work"]["patron"] == nil || params["work"]["patron"] == ""
       redirect to '/works/error'
     else
       @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])

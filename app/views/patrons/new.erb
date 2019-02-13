@@ -6,7 +6,7 @@ Name of Work: <input type="text" name="work[name]" id="work_name">
 <br></br>
 Year completed: <input type="text" name="work[year_completed]">
 <br></br>
-<b>Are any of the following artist's the creator of this work? </b>
+<b>Are any of the following artists the creator of this work? </b>
 <%Artist.all.each do |artist|%>
 <br></br>
   <input type="checkbox" name="work[artist_id]" id="<%=artist.id%>" value="<%=artist.id%>">

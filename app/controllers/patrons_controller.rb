@@ -23,14 +23,13 @@ class PatronsController < ApplicationController
 
   post '/patrons/new' do
     redirect_if_not_logged_in
-    if params["patron_name"] == "" || params["patron_name"] == nil || params["patron_name"] = /\s*/
+    if params["patron_name"] == "" || params["patron_name"] == nil
       redirect to '/patrons/errors/error'
-    elsif params["work"]["name"] == nil || params["work"]["name"] == "" || params["work"]["name"] == /\s*/
+    elsif params["work"]["name"] == nil || params["work"]["name"] == ""
       redirect to '/patrons/errors/error'
-    elsif params["work"]["year_completed"] == nil || params["work"]["year_completed"] == "" || params["work"]["year_completed"] == /\s*/
+    elsif params["work"]["year_completed"] == nil || params["work"]["year_completed"] == ""
       redirect to '/patrons/errors/error'
-      #My intention with line 32 is to make sure that there is at least a new artist initialized or an existing artist associated with this new patron object
-    elsif (params["artist"] == nil) && (!params["work"]["artist_id"])
+    elsif (params["artist"] == nil || params["artist"] == "") && !params["work"]["artist_id"]
       redirect to '/patrons/errors/error'
     else
     @patron = Patron.create(name: params["patron_name"])

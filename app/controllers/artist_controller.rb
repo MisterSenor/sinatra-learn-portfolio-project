@@ -23,11 +23,11 @@ class ArtistController < ApplicationController
 
   post '/artists/new' do
     redirect_if_not_logged_in
-    if params["artist"]["name"] == nil || params["artist"]["name"] == "" || params["artist"]["name"] == /\s*/
+    if params["artist"]["name"] == nil || params["artist"]["name"] == ""
       redirect to '/artists/error'
-    elsif params["artist"]["period"] == nil || params["artist"]["period"] == "" || params["artist"]["period"] == /\s*/
+    elsif params["artist"]["period"] == nil || params["artist"]["period"] == ""
       redirect to '/artists/error'
-    elsif params["artist"]["style"] == nil || params["artist"]["style"] == "" || params["artist"]["style"] == /\s*/
+    elsif params["artist"]["style"] == nil || params["artist"]["style"] == ""
       redirect to '/artists/error'
     elsif Artist.find_by_name(params["artist"]["name"])
       @artist = Artist.find_by_name(params["artist"]["name"])
@@ -73,7 +73,7 @@ class ArtistController < ApplicationController
         @artist.works << @work
       end
     end
-    if params["work"]["name"] != nil && params["work"]["name"] != "" && params["work"]["name"] != /\s*/
+    if params["work"]["name"] != nil && params["work"]["name"] != ""
       @work = Work.create(name: params["work"]["name"] , year_completed: params["work"]["year_completed"])
       @patron = Patron.find_or_create_by(name: params["work"]["patron"])
       @patron.works << @work
