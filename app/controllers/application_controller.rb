@@ -1,13 +1,14 @@
 require './config/environment'
+require 'sinatra/flash'
 
 class ApplicationController < Sinatra::Base
 
-  configure do
-    set :public_folder, 'public'
-    set :views, 'app/views'
-    enable :sessions
-    set :session_secret, "CosimoDeMedici"
-  end
+  register Sinatra::ActiveRecordExtension
+  set :public_folder, 'public'
+  set :session_secret, "CosimoDeMedici"
+  set :views, 'app/views'
+  enable :sessions
+  register Sinatra::Flash
 
   get '/' do
     erb :home
@@ -21,7 +22,7 @@ class ApplicationController < Sinatra::Base
   helpers do
     def redirect_if_not_logged_in
       if !logged_in?
-      redirect "/login?error=You have to be logged in to do that"
+      redirect '/login'
       end
     end
 

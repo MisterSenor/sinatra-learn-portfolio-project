@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   get '/users/:id' do
     if !logged_in?
+      flash[:message] = "You have to be logged in to do that."
       redirect to '/login'
     end
     @user = User.find(params[:id])
@@ -18,12 +19,15 @@ class UsersController < ApplicationController
 
   post '/signup' do
     if params["username"] == "" || params["username"] == nil
+      flash[:message] = "Your username/password cannot be blank."
       redirect to '/signup'
     end
     if params["password"] == "" || params["password"] == nil
+      flash[:message] = "Your username/password cannot be blank."
       redirect to '/signup'
     end
     if @user = User.find_by_username(params["username"])
+      flash[:message] = "Your username already exists.  Please login rather than signing up."
       redirect to '/login'
     else
     @user = User.create(username: params["username"], password: params["password"])
@@ -43,6 +47,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect to '/index'
     else
+      flash[:message] = "You need to signup before you can login."
       redirect to '/signup'
     end
   end

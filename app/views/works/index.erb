@@ -2,9 +2,9 @@
 <%@works.each do |work|%>
 <b>Work #:</b> <%=work.id%><br></br>
 <b>Name:</b> <i><%=work.name%></i><br></br>
-<b>Artist:</b> <%=work.artist.name%><br></br>
+<b>Artist:</b> <%=work.artist.name if work.artist%><br></br>
 <b>Year completed:</b> <%=work.year_completed%><br></br>
-<b>Patron:</b> <%=work.patron.name%>
+<b>Patron:</b> <%=work.patron.name if work.patron%>
 <br></br>
 <a href="/works/<%=work.id%>/edit">Edit this work's information</a>
 <br></br>

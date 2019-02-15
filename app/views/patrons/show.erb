@@ -5,7 +5,7 @@
 <br></br>
 <b>Patron's works:</b> <%@patron.works.each_with_index do |work, index|%>
 <BLOCKQUOTE>work #:<%=index + 1%>
-  <ul><i><%=work.name%></i>, by <%=work.artist.name%>, finished in <%=work.year_completed%></ul>
+  <ul><i><%=work.name%></i>, by <%=work.artist ? work.artist.name : " No artist object"%>, finished in <%=work.year_completed%></ul>
     </BLOCKQUOTE>
   <%end%>
   <br></br>
