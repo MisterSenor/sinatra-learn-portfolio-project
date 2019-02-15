@@ -24,23 +24,27 @@ class PatronsController < ApplicationController
   post '/patrons/new' do
     redirect_if_not_logged_in
     if params["patron_name"] == "" || params["patron_name"] == nil
-      redirect to '/patrons/errors/error'
+      flash[:message] = "Your patron must have a name."
+      redirect to '/patrons/new'
     elsif params["work"]["name"] == nil || params["work"]["name"] == ""
-      redirect to '/patrons/errors/error'
+      flash[:message] = "Your patron must have a work with a name."
+      redirect to '/patrons/new'
     elsif params["work"]["year_completed"] == nil || params["work"]["year_completed"] == ""
-      redirect to '/patrons/errors/error'
+      flash[:message] = "You must include the year of completion for this work."
+      redirect to '/patrons/new'
     elsif (params["artist"] == nil || params["artist"] == "") && !params["work"]["artist_id"]
-      redirect to '/patrons/errors/error'
+      flash[:message] = "You patron must either be associated with a current artist or you must create a new one."
+      redirect to '/patrons/new'
     else
-    @patron = Patron.create(name: params["patron_name"])
-    @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
+    @patron = Patron.create(name: params["patron_name"], user_id: session["user_id"])
+    @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
       if params["work"]["artist_id"] != nil
         @artist = Artist.find_by_id(params["work"]["artist_id"])
         @work.artist = @artist
         @patron.works << @work
         @artist.works << @work
       else
-        @artist = Artist.create(name: params["artist"])
+        @artist = Artist.create(name: params["artist"], user_id: session["user_id"])
         @work.artist = @artist
         @patron.works << @work
         @artist.works << @work
@@ -58,6 +62,10 @@ class PatronsController < ApplicationController
   get '/patrons/:id/edit' do
     redirect_if_not_logged_in
     @patron = Patron.find_by_id(params["id"])
+    if @patron.user_id != current_user.id
+      flash[:message] = "You cannot edit this patron since you did not create it."
+      redirect to '/patrons'
+    end
     erb :'/patrons/edit'
   end
 
@@ -94,8 +102,13 @@ class PatronsController < ApplicationController
   delete '/patrons/:id/delete' do
     redirect_if_not_logged_in
     @patron = Patron.find_by_id(params["id"])
-    @patron.delete
-    redirect to '/patrons'
+    if @patron.user_id == current_user.id
+      @patron.destroy
+      redirect to '/patrons'
+    else
+      flash[:message] = "You cannot delete this patron since you did not create it."
+      redirect to '/patrons'
+    end
   end
 
 

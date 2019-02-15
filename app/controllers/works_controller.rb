@@ -27,10 +27,12 @@ class WorksController < ApplicationController
     elsif params["work"]["patron"] == nil || params["work"]["patron"] == ""
       redirect to '/works/error'
     else
-      @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
+      @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
       @artist = Artist.find_or_create_by(name: params["work"]["artist"])
+      @artist.user_id = session["user_id"]
       @artist.works << @work
       @patron = Patron.find_or_create_by(name: params["work"]["patron"])
+      @patron.user_id = session["user_id"]
       @patron.works << @work
       @work.save
       redirect to "/works"
@@ -46,6 +48,10 @@ class WorksController < ApplicationController
   get '/works/:id/edit' do
     redirect_if_not_logged_in
     @work = Work.find_by_id(params["id"])
+    if @work.user_id != current_user.id
+      flash[:message] = "You cannot edit this work since you did not create it."
+      redirect to '/works'
+    end
     erb :'/works/edit'
   end
 
@@ -63,8 +69,13 @@ class WorksController < ApplicationController
   delete '/works/:id/delete' do
     redirect_if_not_logged_in
     @work = Work.find_by_id(params["id"])
-    @work.delete
-    redirect to '/works'
+    if @work.user_id == current_user.id
+      @work.destroy
+      redirect to '/works'
+    else
+      flash[:message] = "You cannot delete this work since you did not create it."
+      redirect to '/works'
+    end
   end
 
 

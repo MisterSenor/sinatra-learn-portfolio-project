@@ -33,10 +33,11 @@ class ArtistController < ApplicationController
       @artist = Artist.find_by_name(params["artist"]["name"])
       redirect to "/artists/#{@artist.id}/edit"
     else
-      @artist = Artist.create(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"])
+      @artist = Artist.create(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"], user_id: session["user_id"])
       if !params["work"]["name"].empty?
-        @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
+        @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
         @patron = Patron.find_or_create_by(name: params["work"]["patron"])
+        @patron.user_id = session["user_id"]
         @patron.works << @work
         @artist.works << @work
       end
@@ -59,6 +60,10 @@ class ArtistController < ApplicationController
   get '/artists/:id/edit' do
     redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
+    if @artist.user_id != current_user.id
+      flash[:message] = "You cannot edit this artist since you did not create it."
+      redirect to '/artists'
+    end
     erb :'/artists/edit'
   end
 
@@ -85,8 +90,13 @@ class ArtistController < ApplicationController
   delete '/artists/:id/delete' do
     redirect_if_not_logged_in
     @artist = Artist.find_by_id(params["id"])
-    @artist.destroy
-    redirect to '/artists'
+    if @artist.user_id == current_user.id
+      @artist.destroy
+      redirect to '/artists'
+    else
+      flash[:message] = "You cannot delete this artist since you did not create it."
+      redirect to '/artists'
+    end
   end
 
 end

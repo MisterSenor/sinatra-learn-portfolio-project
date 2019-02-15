@@ -1,17 +1,23 @@
-
+<%if flash[:message]%>
+  <i><h3><%=flash[:message]%></i></h3>
+<%end%>
 <%@artists.each do |artist|%>
 <b>Artist #:</b> <%=artist.id%>
 <br></br>
 <b>Name:</b> <%=artist.name%>
 <br></br>
-<b>Works:</b> <%artist.works.each do |work|%>
-  <i><%=work.name%></i>
-  <%=work.year_completed%>
-  <br></br>
+<b>Works:</b>
+<%if artist.works%>
+  <%artist.works.each do |work|%>
+    <i><%=work.name%></i>
+    <%=work.year_completed%>
+    <br></br>
+    <%end%>
   <%end%>
 <b>Style:</b> <%=artist.style%>
 </br></br>
+<%if artist.user_id == current_user.id%>
 <a href="/artists/<%=artist.id%>/edit">Edit this artist's information</a>
-<br></br>
+<%end%>
 <br></br>
 <%end%>

@@ -1,4 +1,7 @@
 <h1>New patron form</h1>
+<%if flash[:message]%>
+  <i><h3><%=flash[:message]%></i></h3>
+<%end%>
 <form action="/patrons/new" method="post">
 Name: <input type="text" name="patron_name">
 <br></br>

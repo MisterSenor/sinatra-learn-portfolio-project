@@ -1,4 +1,6 @@
-
+<%if flash[:message]%>
+  <i><h3><%=flash[:message]%></i></h3>
+<%end%>
 <%@works.each do |work|%>
 <b>Work #:</b> <%=work.id%><br></br>
 <b>Name:</b> <i><%=work.name%></i><br></br>
@@ -6,7 +8,9 @@
 <b>Year completed:</b> <%=work.year_completed%><br></br>
 <b>Patron:</b> <%=work.patron.name if work.patron%>
 <br></br>
+<%if work.user_id == current_user.id%>
 <a href="/works/<%=work.id%>/edit">Edit this work's information</a>
+<%end%>
 <br></br>
 <br></br>
 <%end%>
