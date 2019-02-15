@@ -19,16 +19,21 @@ class WorksController < ApplicationController
   post '/works' do
     redirect_if_not_logged_in
     if params["work"]["name"] == nil || params["work"]["name"] == ""
-      redirect to '/works/error'
+      flash[:message] = "Your work needs a name."
+      redirect to '/works/new'
     elsif params["work"]["year_completed"] == nil || params["work"]["year_completed"] == ""
-      redirect to '/works/error'
+      flash[:message] = "Your works needs a year of completion."
+      redirect to '/works/new'
     elsif params["work"]["artist"] == nil || params["work"]["artist"] == ""
-      redirect to '/works/error'
+      flash[:message] = "Your work needs an artist."
+      redirect to '/works/new'
     elsif params["work"]["patron"] == nil || params["work"]["patron"] == ""
-      redirect to '/works/error'
+      flash[:message] = "Your work needs a patron."
+      redirect to '/works/new'
     else
       @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
       @artist = Artist.find_or_create_by(name: params["work"]["artist"])
+      #there will be a bug here if the same name is created by two different users. We need some logic here to fix this.
       @artist.user_id = session["user_id"]
       @artist.works << @work
       @patron = Patron.find_or_create_by(name: params["work"]["patron"])

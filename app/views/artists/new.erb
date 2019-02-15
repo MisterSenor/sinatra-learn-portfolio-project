@@ -1,7 +1,8 @@
 <h1>New artist form</h1>
+<%if flash[:message]%>
+  <i><h3><%=flash[:message]%></i></h3>
+<%end%>
 <form action="/artists/new" method="post">
-
-
 Artist name: <input type="text" name="artist[name]">
 <br></br>
 Artist period: <input type="text" name="artist[period]">

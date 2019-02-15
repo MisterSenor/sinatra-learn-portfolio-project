@@ -16,19 +16,17 @@ class ArtistController < ApplicationController
     erb :'/artists/new'
   end
 
-  get '/artists/error' do
-    redirect_if_not_logged_in
-    erb :'/artists/error/error'
-  end
-
   post '/artists/new' do
     redirect_if_not_logged_in
     if params["artist"]["name"] == nil || params["artist"]["name"] == ""
-      redirect to '/artists/error'
+      flash[:message] = "Your artist cannot have a blank name."
+      redirect to '/artists/new'
     elsif params["artist"]["period"] == nil || params["artist"]["period"] == ""
-      redirect to '/artists/error'
+      flash[:message] = "Your artist cannot have a blank period."
+      redirect to '/artists/new'
     elsif params["artist"]["style"] == nil || params["artist"]["style"] == ""
-      redirect to '/artists/error'
+      flash[:message] = "Your artist cannot have a blank style."
+      redirect to '/artists/new'
     elsif Artist.find_by_name(params["artist"]["name"])
       @artist = Artist.find_by_name(params["artist"]["name"])
       redirect to "/artists/#{@artist.id}/edit"

@@ -2,7 +2,7 @@
   <i><h3><%=flash[:message]%></i></h3>
 <%end%>
 <%@artists.each do |artist|%>
-<b>Artist #:</b> <%=artist.id%>
+<p><b>Artist #:</b> <%=artist.id%>
 <br></br>
 <b>Name:</b> <%=artist.name%>
 <br></br>
@@ -14,8 +14,7 @@
     <br></br>
     <%end%>
   <%end%>
-<b>Style:</b> <%=artist.style%>
-</br></br>
+<b>Style:</b> <%=artist.style%></p>
 <%if artist.user_id == current_user.id%>
 <a href="/artists/<%=artist.id%>/edit">Edit this artist's information</a>
 <%end%>

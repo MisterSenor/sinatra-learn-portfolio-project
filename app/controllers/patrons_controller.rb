@@ -84,7 +84,7 @@ class PatronsController < ApplicationController
       @patron.works = @patron.works.reject{|x| !new_work_array.include?(x)}
     end
     if !params["work"]["name"].empty?#the params form with a new work name isn't empty
-      @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
+      @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
       if params["patron_works"].keys.include?("artist_id")
         @artist = Artist.find_by_id(params["patron_works"]["artist_id"])
         @work.artist = @artist
