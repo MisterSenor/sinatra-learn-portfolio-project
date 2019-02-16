@@ -30,10 +30,12 @@ class WorksController < ApplicationController
     elsif params["work"]["patron"] == nil || params["work"]["patron"] == ""
       flash[:message] = "Your work needs a patron."
       redirect to '/works/new'
+    elsif Work.find_by_name(params["work"]["name"])
+      @work = Work.find_by_name(params["work"]["name"])
+      redirect to "/works/#{@work.id}/edit"
     else
       @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
       @artist = Artist.find_or_create_by(name: params["work"]["artist"])
-      #there will be a bug here if the same name is created by two different users. We need some logic here to fix this.
       @artist.user_id = session["user_id"]
       @artist.works << @work
       @patron = Patron.find_or_create_by(name: params["work"]["patron"])

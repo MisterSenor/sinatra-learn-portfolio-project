@@ -2,24 +2,23 @@
   <i><h3><%=flash[:message]%></i></h3>
 <%end%>
 <%@patrons.each do |patron|%>
-  <b>Patron #:</b> <%=patron.id%>
+  <p><b>Patron #:</b> <%=patron.id%>
   <br></br>
   <b>Patron name:</b> <%=patron.name%>
   <br></br>
-  <b>Works: </b>
+  <b>Works:</b></p>
   <%if patron.works%>
     <%patron.works.each_with_index do |work, index|%>
-    <BLOCKQUOTE>Work #: <%=index + 1%>, <i><%=work.name%></i>
+    <p><BLOCKQUOTE>Work #: <%=index + 1%>, <i><%=work.name%></i>
       <br></br>
       Artist: <%=work.artist.name if work.artist%>
       <br></br>
       Year completed: <%=work.year_completed%>
-    </BLOCKQUOTE>
-    <br></br>
+    </BLOCKQUOTE></p>
     <%end%>
   <%end%>
   <%if patron.user_id == current_user.id%>
-  <p><a href="/patrons/<%=patron.id%>/edit">Edit this patron's information</a></p>
+  <a href="/patrons/<%=patron.id%>/edit">Edit this patron's information</a>
   <%end%>
   <br></br>
 <%end%>

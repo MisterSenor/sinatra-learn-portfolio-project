@@ -35,6 +35,12 @@ class PatronsController < ApplicationController
     elsif (params["artist"] == nil || params["artist"] == "") && !params["work"]["artist_id"]
       flash[:message] = "You patron must either be associated with a current artist or you must create a new one."
       redirect to '/patrons/new'
+    elsif params["artist"] != nil && params["work"]["artist_id"]
+      flash[:message] = "A patron's work cannot have two different artists."
+      redirect to '/patrons/new'
+    elsif Patron.find_by_name(params["patron_name"])
+      @patron = Patron.find_by_name(params["patron_name"])
+      redirect to "/patrons/#{@patron.id}/edit"
     else
     @patron = Patron.create(name: params["patron_name"], user_id: session["user_id"])
     @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
