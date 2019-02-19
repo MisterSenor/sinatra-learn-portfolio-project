@@ -34,8 +34,7 @@ class ArtistController < ApplicationController
       @artist = Artist.create(name: params["artist"]["name"], period: params["artist"]["period"], style: params["artist"]["style"], user_id: session["user_id"])
       if !params["work"]["name"].empty?
         @work = Work.create(name: params["work"]["name"], year_completed: params["work"]["year_completed"], user_id: session["user_id"])
-        @patron = Patron.find_or_create_by(name: params["work"]["patron"])
-        @patron.user_id = session["user_id"]
+        @patron = Patron.find_or_create_by(name: params["work"]["patron"], user_id: session["user_id"])
         @patron.works << @work
         @artist.works << @work
       end

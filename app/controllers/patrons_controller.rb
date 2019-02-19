@@ -11,16 +11,6 @@ class PatronsController < ApplicationController
     erb :'/patrons/new'
   end
 
-  get '/patrons/errors/error' do
-    redirect_if_not_logged_in
-    erb :'/patrons/errors/error'
-  end
-
-  get '/patrons/errors/too_much_artist_input' do
-    redirect_if_not_logged_in
-    erb :'/patrons/errors/too_much_artist_input'
-  end
-
   post '/patrons/new' do
     redirect_if_not_logged_in
     if params["patron_name"] == "" || params["patron_name"] == nil

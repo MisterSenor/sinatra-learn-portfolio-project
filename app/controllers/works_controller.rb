@@ -38,8 +38,7 @@ class WorksController < ApplicationController
       @artist = Artist.find_or_create_by(name: params["work"]["artist"])
       @artist.user_id = session["user_id"]
       @artist.works << @work
-      @patron = Patron.find_or_create_by(name: params["work"]["patron"])
-      @patron.user_id = session["user_id"]
+      @patron = Patron.find_or_create_by(name: params["work"]["patron"], user_id: session["user_id"])
       @patron.works << @work
       @work.save
       redirect to "/works"
