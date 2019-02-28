@@ -64,12 +64,16 @@ class WorksController < ApplicationController
   patch '/works/:id' do
     redirect_if_not_logged_in
     @work = Work.find_by_id(params["id"])
-    @work.update(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
-    @patron = Patron.find_by_id(@work.patron_id)
-    @patron.update(name: params["work"]["patron"])
-    @artist = Artist.find_by_id(@work.artist_id)
-    @artist.update(name: params["work"]["artist"])
-    erb :'/works/show'
+    if @work.user_id == current_user.id
+      @work.update(name: params["work"]["name"], year_completed: params["work"]["year_completed"])
+      @patron = Patron.find_by_id(@work.patron_id)
+      @patron.update(name: params["work"]["patron"])
+      @artist = Artist.find_by_id(@work.artist_id)
+      @artist.update(name: params["work"]["artist"])
+      erb :'/works/show'
+    else
+      redirect to '/works'
+    end
   end
 
   delete '/works/:id/delete' do

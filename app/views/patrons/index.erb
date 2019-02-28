@@ -4,7 +4,7 @@
 <%@patrons.each do |patron|%>
   <p><b>Patron #:</b> <%=patron.id%>
   <br></br>
-  <b>Patron name:</b> <%=patron.name%>
+  <b>Patron name:</b><a href="/patrons/<%=patron.id%>"><%=patron.name%></a>
   <br></br>
   <b>Works:</b></p>
   <%if patron.works%>
