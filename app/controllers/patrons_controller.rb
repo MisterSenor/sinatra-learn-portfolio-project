@@ -93,7 +93,7 @@ class PatronsController < ApplicationController
         end
         @patron.works << @work
       end
-    end 
+    end
     redirect to "/patrons"
   end
 

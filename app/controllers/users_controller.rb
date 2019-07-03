@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+
   get '/users/:id' do
     if !logged_in?
       flash[:message] = "You have to be logged in to do that."

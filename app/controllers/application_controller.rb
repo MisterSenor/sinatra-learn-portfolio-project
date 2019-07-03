@@ -11,10 +11,10 @@ class ApplicationController < Sinatra::Base
   register Sinatra::Flash
 
   get '/' do
-    if !logged_in?
-      erb :home
+    if logged_in?
+      redirect '/index'
     else
-      redirect to '/index'
+      redirect to '/login'
     end
   end
 
